@@ -34,6 +34,7 @@ RUN bash -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main
 		postgresql-client-10 \
 		postgresql-client-11 \
 		postgresql-client-12 \
+		postgresql-client-13 \
 		python3 \
         python3-distutils \
 		rsync \
@@ -46,7 +47,7 @@ RUN bash -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main
 
 # Set up some defaults for file/directory locations used in entrypoint.sh.
 ENV \
-	BARMAN_VERSION=2.10 \
+	BARMAN_VERSION=2.12 \
 	BARMAN_CRON_SRC=/private/cron.d \
 	BARMAN_DATA_DIR=/var/lib/barman \
 	BARMAN_LOG_DIR=/var/log/barman \
