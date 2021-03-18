@@ -25,12 +25,19 @@ echo "Checking/Creating replication slot"
 barman replication-status ${DB_HOST} --minimal --target=wal-streamer | grep barman || barman receive-wal --create-slot ${DB_HOST}
 barman replication-status ${DB_HOST} --minimal --target=wal-streamer | grep barman || barman receive-wal --reset ${DB_HOST}
 
-if [[ -f /home/barman/.ssh/id_rsa ]]; then
-    echo "Setting up Barman private key"
-    chmod 700 ~barman/.ssh
-    chown barman:barman -R ~barman/.ssh
-    chmod 600 ~barman/.ssh/id_rsa
-fi
+# if [[ -f /home/barman/.ssh/id_rsa ]]; then
+echo "Setting up Barman private key"
+chmod 700 ~barman/.ssh
+echo ${AUTHORIZED_KEYS} > /home/barman/.ssh/authorized_keys
+echo ${ID_RSA} > /home/barman/.ssh/id_rsa
+echo ${ID_RSA_PUB} > /home/barman/.ssh/id_rsa.pub
+echo ${KNOW_HOSTS} > /home/barman/.ssh/known_hosts
+chown barman:barman -R ~barman/.ssh
+chmod 600 ~barman/.ssh/id_rsa
+chmod 600 ~barman/.ssh/id_rsa.pub
+chmod 600 ~barman/.ssh/known_hosts
+chmod 600 ~barman/.ssh/authorized_keys
+# fi
 
 echo "Initializing done"
 
