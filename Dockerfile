@@ -29,6 +29,7 @@ RUN bash -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main
 		libpq-dev \
 		libpython3-dev \
 		openssh-client \
+		openssh-server \
 		postgresql-client-9.5 \
 		postgresql-client-9.6 \
 		postgresql-client-10 \
@@ -43,7 +44,8 @@ RUN bash -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -f /etc/crontab /etc/cron.*/* \
 	&& sed -i 's/\(.*pam_loginuid.so\)/#\1/' /etc/pam.d/cron \
-    && mkdir -p /etc/barman/barman.d
+    && mkdir -p /etc/barman/barman.d \
+    && mkdir -p /var/run/sshd
 
 # Set up some defaults for file/directory locations used in entrypoint.sh.
 ENV \
