@@ -42,10 +42,8 @@ RUN bash -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main
         gettext-base \
         procps \
 	&& rm -rf /var/lib/apt/lists/* \
-	&& rm -f /etc/crontab /etc/cron.*/* \
-	&& sed -i 's/\(.*pam_loginuid.so\)/#\1/' /etc/pam.d/cron \
-    && mkdir -p /etc/barman/barman.d \
-    && mkdir -p /var/run/sshd
+  && mkdir -p /etc/barman/barman.d \
+  && mkdir -p /var/run/sshd
 
 # Set up some defaults for file/directory locations used in entrypoint.sh.
 ENV \
@@ -90,7 +88,6 @@ RUN gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 595E85A6B1B
  && gpg --verify /tini.asc \
  && chmod +x /tini
 
-CMD ["cron", "-L", "4",  "-f"]
 COPY entrypoint.sh /
 WORKDIR ${BARMAN_DATA_DIR}
 
@@ -99,3 +96,4 @@ WORKDIR ${BARMAN_DATA_DIR}
 # pg_receivexlog running.  Cron may also have jobs installed to run
 # 'barman backup' periodically.
 ENTRYPOINT ["/tini", "--", "/entrypoint.sh"]
+CMD ["cron", "-L", "4",  "-f"]
