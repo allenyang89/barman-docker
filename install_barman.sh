@@ -14,5 +14,6 @@ wget -O - https://bootstrap.pypa.io/get-pip.py | python3 -
 # for notification of the backup status.
 pip install barman==${BARMAN_VERSION} requests==2.23.0
 useradd --system --shell /bin/bash barman
+echo barman:barman | chpasswd
 install -d -m 0700 -o barman -g barman ~barman/.ssh
 gosu barman bash -c 'echo -e "Host *\n\tCheckHostIP no" > ~/.ssh/config'
